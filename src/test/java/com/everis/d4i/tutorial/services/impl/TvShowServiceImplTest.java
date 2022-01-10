@@ -155,6 +155,7 @@ class TvShowServiceImplTest {
 		
 		String msg = "";
 		
+		this.getTvShowById();
 		
 		doThrow(new IllegalArgumentException()).when(tvShowRepository).deleteById(tvShow.getId());
 

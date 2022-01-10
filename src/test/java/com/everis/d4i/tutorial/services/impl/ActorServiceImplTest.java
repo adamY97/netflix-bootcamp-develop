@@ -159,6 +159,7 @@ class ActorServiceImplTest {
 		
 		String msg = "";
 		
+		this.getActorById();
 		
 		doThrow(new IllegalArgumentException()).when(actorRepository).deleteById(actor.getId());
 
