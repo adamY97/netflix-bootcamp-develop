@@ -5,6 +5,7 @@ package com.everis.d4i.tutorial.controllers.impl;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
@@ -117,10 +119,29 @@ class ActorControllerImplTest {
 		
 		when(actorService.getActorById(actor.getId())).thenReturn(actorRest);
 		
-		mockito.perform(get(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR))
+		mockito.perform(get(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR
+				+ RestConstants.RESOURCE_ID , actor.getId()))
 		
 			   .andExpect(status().isOk())
-		       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+		       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		       .andExpect(jsonPath(("$.data.id"), is(Math.toIntExact(actor.getId()))))
+		       .andExpect(jsonPath(("$.data.name"), is(actor.getName())))
+		       .andExpect(jsonPath(("$.data.surname"), is(actor.getSurname())))
+		       .andExpect(jsonPath(("$.data.date_birth"), is(actor.getDate_birth().getTime())));
+		
+	}
+	
+	@Test
+	void createActor() throws Exception{
+		
+		when(actorService.createActor(Mockito.any(ActorRest.class))).thenReturn(actorRest);
+		
+		mockito.perform(post(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR
+				+ RestConstants.RESOURCE_CREATE));
+		
+//		   .andExpect(status().isCreated())
+//	       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+//	       .andExpect(jsonPath(("$.data.name"), is(actor.getName())));
 		
 	}
 
