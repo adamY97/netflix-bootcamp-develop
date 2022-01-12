@@ -5,6 +5,7 @@ package com.everis.d4i.tutorial.controllers.impl;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -149,5 +150,21 @@ class ActorControllerImplTest {
 	       .andExpect(jsonPath(("$.data.surname"), is(actorRest.getSurname())));
 		
 	}
+	
+	@Test
+	void updateActor() throws Exception{
+		
+		when(actorService.updateActor(actor.getId(), actorRest)).thenReturn(actorRest);
+		
+		mockito.perform(patch(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR
+				+ RestConstants.RESOURCE_ID , actor.getId() + RestConstants.RESOURCE_UPDATE).contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content("{\"name\":\"Adammm\"}"))
+		
+		   .andExpect(status().isOk())
+	       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+	       .andExpect(jsonPath(("$.data.name"), is(actorRest.getName())));
+		
+	}
+	
 
 }

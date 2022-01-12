@@ -67,12 +67,12 @@ public class ActorControllerImpl implements ActorController{
 	public NetflixResponse<ActorRest> updateActor(
 			@PathVariable Long id, @RequestBody @Valid final ActorRest actorRest)
 			throws NetflixException{
-		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.NO_CONTENT), CommonConstants.OK,
+		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				actorService.updateActor(id , actorRest));
 	}
 	
 	@Override
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = RestConstants.RESOURCE_ID + RestConstants.RESOURCE_DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public NetflixResponse<ActorRest> deleteActor(
 			@PathVariable Long id)
