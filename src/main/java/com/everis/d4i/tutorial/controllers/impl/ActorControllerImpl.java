@@ -52,7 +52,7 @@ public class ActorControllerImpl implements ActorController{
 	}
 	
 	@Override
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = RestConstants.RESOURCE_CREATE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public NetflixResponse<ActorRest> createActor(
 			@ApiParam(value = RestConstants.PARAMETER_ACTOR, required = true) @RequestBody @Valid final ActorRest actorRest)

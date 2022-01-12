@@ -137,11 +137,16 @@ class ActorControllerImplTest {
 		when(actorService.createActor(Mockito.any(ActorRest.class))).thenReturn(actorRest);
 		
 		mockito.perform(post(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR
-				+ RestConstants.RESOURCE_CREATE));
+				+ RestConstants.RESOURCE_CREATE).contentType(MediaType.APPLICATION_JSON_UTF8).content("{"
+						+ "  \"date_birth\": \"2022-01-12T09:48:02.477Z\","
+						+ "  \"name\": \"Adam\","
+						+ "  \"surname\": \"Yacobi\""
+						+ "}"))
 		
-//		   .andExpect(status().isCreated())
-//	       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
-//	       .andExpect(jsonPath(("$.data.name"), is(actor.getName())));
+		   .andExpect(status().isCreated())
+	       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+	       .andExpect(jsonPath(("$.data.name"), is(actorRest.getName())))
+	       .andExpect(jsonPath(("$.data.surname"), is(actorRest.getSurname())));
 		
 	}
 
