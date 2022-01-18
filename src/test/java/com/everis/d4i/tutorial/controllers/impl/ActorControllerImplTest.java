@@ -4,6 +4,7 @@ package com.everis.d4i.tutorial.controllers.impl;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -154,15 +155,33 @@ class ActorControllerImplTest {
 	@Test
 	void updateActor() throws Exception{
 		
-		when(actorService.updateActor(actor.getId(), actorRest)).thenReturn(actorRest);
+		when(actorService.updateActor(Mockito.any(Long.class), Mockito.any(ActorRest.class))).thenReturn(actorRest);
 		
 		mockito.perform(patch(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR
 				+ RestConstants.RESOURCE_ID , actor.getId() + RestConstants.RESOURCE_UPDATE).contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content("{\"name\":\"Adammm\"}"))
+				.content("{\"name\":\"Adam\"}"))
 		
 		   .andExpect(status().isOk())
 	       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-	       .andExpect(jsonPath(("$.data.name"), is(actorRest.getName())));
+	       .andExpect(jsonPath(("$.data.name"), is(actorRest.getName())))
+	       .andExpect(jsonPath(("$.data.surname"), is(actorRest.getSurname())));
+		
+	}
+	
+	@Test
+	void deleteActor() throws Exception{
+		
+		when(actorService.deleteActor(actor.getId())).thenReturn(actorRest);
+		
+		mockito.perform(delete(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR
+				+ RestConstants.RESOURCE_ID , actor.getId() + RestConstants.RESOURCE_DELETE))
+		
+			   .andExpect(status().isNoContent())
+		       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		       .andExpect(jsonPath(("$.data.id"), is(Math.toIntExact(actorRest.getId()))))
+		       .andExpect(jsonPath(("$.data.name"), is(actorRest.getName())))
+		       .andExpect(jsonPath(("$.data.surname"), is(actorRest.getSurname())))
+		       .andExpect(jsonPath(("$.data.date_birth"), is(actorRest.getDate_birth().getTime())));
 		
 	}
 	

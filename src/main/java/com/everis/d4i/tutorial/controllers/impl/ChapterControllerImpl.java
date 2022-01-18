@@ -22,7 +22,12 @@ import com.everis.d4i.tutorial.json.ChapterRest;
 import com.everis.d4i.tutorial.responses.NetflixResponse;
 import com.everis.d4i.tutorial.services.ChapterService;
 import com.everis.d4i.tutorial.utils.constants.CommonConstants;
+import com.everis.d4i.tutorial.utils.constants.ExceptionConstants;
 import com.everis.d4i.tutorial.utils.constants.RestConstants;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_CHAPTER)
@@ -30,6 +35,13 @@ public class ChapterControllerImpl implements ChapterController {
 
 	@Autowired
 	private ChapterService chapterService;
+	
+	@ApiOperation(value = "Mostrar capitulo/s por numero de serie y numero de temporada")
+	@ApiResponses(value = {
+	@ApiResponse(code = 200, message = CommonConstants.OK, response = ChapterRest.class),
+	@ApiResponse(code = 404, message = ExceptionConstants.MESSAGE_INEXISTENT_CHAPTER),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
 
 	@Override
 	@ResponseStatus(HttpStatus.OK)
@@ -39,6 +51,13 @@ public class ChapterControllerImpl implements ChapterController {
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				chapterService.getChaptersByTvShowIdAndSeasonNumber(tvShowId, seasonNumber));
 	}
+	
+	@ApiOperation(value = "Mostrar capitulo numero de serie, numero de temporada e ID")
+	@ApiResponses(value = {
+	@ApiResponse(code = 200, message = CommonConstants.OK, response = ChapterRest.class),
+	@ApiResponse(code = 404, message = ExceptionConstants.MESSAGE_INEXISTENT_CHAPTER),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
 
 	@Override
 	@ResponseStatus(HttpStatus.OK)
@@ -50,6 +69,14 @@ public class ChapterControllerImpl implements ChapterController {
 	}
 	
 	//METODO PATCH
+	
+	@ApiOperation(value = "Editar un capitulo")
+	@ApiResponses(value = {
+	@ApiResponse(code = 200, message = CommonConstants.OK, response = ChapterRest.class),
+	@ApiResponse(code = 400, message = ExceptionConstants.BAD_REQUEST),
+	@ApiResponse(code = 401, message = ExceptionConstants.UNAUTHORIZED),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
 	
 	@Override
 	@ResponseStatus(HttpStatus.OK)

@@ -4,14 +4,21 @@ import java.io.Serializable;
 import java.time.Year;
 import java.util.List;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class TvShowAwardRest implements Serializable{
 
 	private static final long serialVersionUID = 4860574199418708002L;
 	
+	@ApiModelProperty(position = 0)
 	private Long id;
+	@ApiModelProperty(position = 1)
 	private String name;
+	@ApiModelProperty(position = 2)
 	private String shortDescription;
+	@ApiModelProperty(position = 3)
 	private Year year;
+	@ApiModelProperty(position = 4)
 	private List<AwardRest> awards;
 	
 	public Long getId() {

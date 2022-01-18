@@ -4,6 +4,8 @@ public class CommonConstants {
 
 	public static final String SUCCESS = "Success";
 	public static final String OK = "OK";
+	public static final String CREATED = "Created";
+	public static final String NO_CONTENT = "No Content";
 
 	public static final String UTF_8 = "UTF-8";
 

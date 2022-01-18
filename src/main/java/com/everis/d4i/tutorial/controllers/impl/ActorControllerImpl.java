@@ -24,9 +24,13 @@ import com.everis.d4i.tutorial.json.ActorRestS;
 import com.everis.d4i.tutorial.responses.NetflixResponse;
 import com.everis.d4i.tutorial.services.ActorService;
 import com.everis.d4i.tutorial.utils.constants.CommonConstants;
+import com.everis.d4i.tutorial.utils.constants.ExceptionConstants;
 import com.everis.d4i.tutorial.utils.constants.RestConstants;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
 
 @RestController
 @RequestMapping(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR)
@@ -34,6 +38,13 @@ public class ActorControllerImpl implements ActorController{
 	
 	@Autowired
 	private ActorService actorService;
+	
+	@ApiOperation(value = "Mostrar todos los actores")
+	@ApiResponses(value = {
+	@ApiResponse(code = 200, message = CommonConstants.OK, response = ActorRestS.class),
+	@ApiResponse(code = 404, message = ExceptionConstants.MESSAGE_INEXISTENT_ACTOR),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
 
 	@Override
 	@ResponseStatus(HttpStatus.OK)
@@ -43,6 +54,13 @@ public class ActorControllerImpl implements ActorController{
 				actorService.getActors());
 	}
 	
+	@ApiOperation(value = "Mostrar actor por ID")
+	@ApiResponses(value = {
+	@ApiResponse(code = 200, message = CommonConstants.OK, response = ActorRest.class),
+	@ApiResponse(code = 404, message = ExceptionConstants.MESSAGE_INEXISTENT_ACTOR),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
+	
 	@Override
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = RestConstants.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,6 +68,14 @@ public class ActorControllerImpl implements ActorController{
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				actorService.getActorById(id));
 	}
+	
+	@ApiOperation(value = "Crear un nuevo actor")
+	@ApiResponses(value = {
+	@ApiResponse(code = 201, message = CommonConstants.CREATED, response = ActorRest.class),
+	@ApiResponse(code = 400, message = ExceptionConstants.BAD_REQUEST),
+	@ApiResponse(code = 401, message = ExceptionConstants.UNAUTHORIZED),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
 	
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
@@ -60,6 +86,14 @@ public class ActorControllerImpl implements ActorController{
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.CREATED), CommonConstants.OK,
 				actorService.createActor(actorRest));
 	}
+	
+	@ApiOperation(value = "Editar un actor")
+	@ApiResponses(value = {
+	@ApiResponse(code = 200, message = CommonConstants.OK, response = ActorRest.class),
+	@ApiResponse(code = 400, message = ExceptionConstants.BAD_REQUEST),
+	@ApiResponse(code = 401, message = ExceptionConstants.UNAUTHORIZED),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
 
 	@Override
 	@ResponseStatus(HttpStatus.OK)
@@ -70,6 +104,14 @@ public class ActorControllerImpl implements ActorController{
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				actorService.updateActor(id , actorRest));
 	}
+	
+	@ApiOperation(value = "Borrar un actor")
+	@ApiResponses(value = {
+	@ApiResponse(code = 204, message = CommonConstants.NO_CONTENT, response = ActorRest.class),
+	@ApiResponse(code = 400, message = ExceptionConstants.BAD_REQUEST),
+	@ApiResponse(code = 401, message = ExceptionConstants.UNAUTHORIZED),
+	@ApiResponse(code = 500, message = ExceptionConstants.INTERNAL_SERVER_ERROR)
+	})
 	
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)

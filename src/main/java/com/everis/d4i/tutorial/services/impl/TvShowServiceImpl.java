@@ -96,6 +96,8 @@ public class TvShowServiceImpl implements TvShowService {
 	@Override
 	public TvShowRest updateTvShow(Long id, @Valid TvShowRest tvShowRest) throws NetflixException {
 		
+		this.getTvShowById(id);
+		
 		TvShow tvShow = this.tvShowRepository.getOne(id);
 		
 		tvShow.setName(tvShowRest.getName());

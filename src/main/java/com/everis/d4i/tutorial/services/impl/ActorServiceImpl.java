@@ -108,6 +108,8 @@ public class ActorServiceImpl implements ActorService{
 	@Override
 	public ActorRest updateActor(Long id, @Valid ActorRest actorRest) throws NetflixException {
 		
+		this.getActorById(id);
+		
 		Actor actor = this.actorRepository.getOne(id);
 		
 		if(actorRest.getName() != null) {
