@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +37,7 @@ import io.swagger.annotations.ApiResponse;
 @RequestMapping(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR)
 public class ActorControllerImpl implements ActorController{
 	
-	@Autowired
+	@Autowired @Qualifier("Spain")
 	private ActorService actorService;
 	
 	@ApiOperation(value = "Mostrar todos los actores")

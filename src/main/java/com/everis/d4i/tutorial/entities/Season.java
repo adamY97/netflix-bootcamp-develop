@@ -15,8 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "SEASONS")
+@Data
 public class Season implements Serializable {
 
 	private static final long serialVersionUID = 180802329613616000L;
@@ -37,45 +40,5 @@ public class Season implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "season")
 	private List<Chapter> chapters;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public short getNumber() {
-		return number;
-	}
-
-	public void setNumber(short number) {
-		this.number = number;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public TvShow getTvShow() {
-		return tvShow;
-	}
-
-	public void setTvShow(TvShow tvShow) {
-		this.tvShow = tvShow;
-	}
-
-	public List<Chapter> getChapters() {
-		return chapters;
-	}
-
-	public void setChapters(List<Chapter> chapters) {
-		this.chapters = chapters;
-	}
 
 }

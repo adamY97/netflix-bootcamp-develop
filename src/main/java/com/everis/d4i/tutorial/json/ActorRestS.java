@@ -6,8 +6,10 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 public class ActorRestS implements Serializable{
 
 	private static final long serialVersionUID = 2562292635410148858L;
@@ -20,35 +22,5 @@ public class ActorRestS implements Serializable{
 	private String surname;
 	@ApiModelProperty(position = 3)
 	private Date date_birth;
-	
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getSurname() {
-		return surname;
-	}
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	
-	public Date getDate_birth() {
-		return date_birth;
-	}
-	public void setDate_birth(Date date_birth) {
-		this.date_birth = date_birth;
-	}
-
 	
 }

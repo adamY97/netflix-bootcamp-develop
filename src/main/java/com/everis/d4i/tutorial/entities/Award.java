@@ -13,8 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "AWARDS")
+@Data
 public class Award implements Serializable{
 
 	private static final long serialVersionUID = 8192617660647640283L;
@@ -35,45 +38,5 @@ public class Award implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TV_SHOW_ID", nullable = false)
 	private TvShow tvShow;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public TvShow getTvShow() {
-		return tvShow;
-	}
-
-	public void setTvShow(TvShow tvShow) {
-		this.tvShow = tvShow;
-	}
 	
 }
