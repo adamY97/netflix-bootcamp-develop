@@ -12,12 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "CATEGORIES")
-@Data @NoArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 180802329613616000L;

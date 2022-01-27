@@ -47,3 +47,10 @@ INSERT INTO AWARDS(ID, NAME, DESCRIPTION, DATE, TV_SHOW_ID) VALUES
 	(2, 'Mejor serie de Suspense', 'Descripcion' , '2021/08/17', 1), 
 	(3, 'Mejor serie de Comedia', 'Descripcion' , '2021/06/01',3),
 	(4, 'Mejor serie de Terror', 'Descripcion' , '2021/12/28',2);
+
+
+INSERT INTO USERS(ID, NAME, SURNAME, EMAIL, USERNAME, PASSWORD, TYPE) VALUES /* Administrador/es */
+	(1, 'Adam', 'Yacobi' , 'adam@email.com', 'admin', 'admin', 'ADMIN')
+
+INSERT INTO USERS(ID, NAME, SURNAME, EMAIL, USERNAME, PASSWORD) VALUES  /*Usuario/s*/
+	(2, 'Usuario1', 'u' , 'usuario1@email.com', 'usuario1', 'usuario1')

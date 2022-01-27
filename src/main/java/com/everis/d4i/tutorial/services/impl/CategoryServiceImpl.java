@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.everis.d4i.tutorial.entities.Category;
@@ -27,10 +28,14 @@ public class CategoryServiceImpl implements CategoryService {
 
 	private ModelMapper modelMapper = new ModelMapper();
 
+	private Sort sortByIdAsc() {   //method for order by ID
+		return new Sort(Sort.Direction.ASC, "id");
+	}
+
 	public List<CategoryRest> getCategories() throws NetflixException {
 
-		return categoryRepository.findAll().stream().map(category -> modelMapper.map(category, CategoryRest.class))
-				.collect(Collectors.toList());
+		return categoryRepository.findAll(sortByIdAsc()).stream()
+				.map(category -> modelMapper.map(category, CategoryRest.class)).collect(Collectors.toList());
 
 	}
 
