@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
@@ -30,6 +31,7 @@ public class Actor implements Serializable{
 	private Long id;
 	
 	@Column(name = "NAME")
+	@NotEmpty
 	private String name;
 
 	@Column(name = "SURNAME")
@@ -43,5 +45,6 @@ public class Actor implements Serializable{
 			name = "ACTOR_CHAPTER",
 			joinColumns = @JoinColumn(name = "ACTOR_ID"),
 			inverseJoinColumns = @JoinColumn(name = "CHAPTER_ID"))
-	private List<Chapter> chapters;
+	private List<Chapter> chapters;	
+	
 }

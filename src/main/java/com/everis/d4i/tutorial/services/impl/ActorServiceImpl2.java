@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.everis.d4i.tutorial.exceptions.NetflixException;
+import com.everis.d4i.tutorial.json.ActorFilmRest;
 import com.everis.d4i.tutorial.json.ActorRest;
 import com.everis.d4i.tutorial.json.ActorRestS;
 import com.everis.d4i.tutorial.services.ActorService;
@@ -23,7 +24,7 @@ public class ActorServiceImpl2 implements ActorService{
 	}
 
 	@Override
-	public ActorRest getActorById(Long id) throws NetflixException {
+	public ActorFilmRest getActorById(Long id) throws NetflixException {
 		// TODO Auto-generated method stub
 		return null;
 	}

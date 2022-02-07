@@ -119,7 +119,7 @@ class ActorControllerImplTest {
 	@Test
 	void getActorById() throws Exception{
 		
-		when(actorService.getActorById(actor.getId())).thenReturn(actorRest);
+//		when(actorService.getActorById(actor.getId())).thenReturn(actorRest);
 		
 		mockito.perform(get(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR
 				+ RestConstants.RESOURCE_ID , actor.getId()))

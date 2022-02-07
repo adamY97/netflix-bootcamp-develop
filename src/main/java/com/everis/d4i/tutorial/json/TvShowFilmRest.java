@@ -1,10 +1,8 @@
 package com.everis.d4i.tutorial.json;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Year;
 import java.util.List;
-
-import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -13,22 +11,28 @@ import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-public class ActorRest implements Serializable{
+public class TvShowFilmRest implements Serializable {
 
-	private static final long serialVersionUID = 2562292635410148858L;
+	private static final long serialVersionUID = 4916713904971425156L;
 
 	@ApiModelProperty(position = 0)
 	private Long id;
 	@ApiModelProperty(position = 1)
-	@NotEmpty(message = "Name may not be empty")
 	private String name;
 	@ApiModelProperty(position = 2)
-	private String surname;
+	private String shortDescription;
 	@ApiModelProperty(position = 3)
-	private Date date_birth;
+	private String longDescription;
 	@ApiModelProperty(position = 4)
-	private List<TvShowRest> tvShows;
+	private Year year;
 	@ApiModelProperty(position = 5)
-	private List<ChapterRest> chapters;
+	private byte recommendedAge;
+	@ApiModelProperty(position = 6)
+	private List<CategoryRest> categories;
+	@ApiModelProperty(position = 7)
+	private String advertising;
+	@ApiModelProperty(position = 8)
+	private List<SeasonFilmRest> seasons;
 	
+
 }

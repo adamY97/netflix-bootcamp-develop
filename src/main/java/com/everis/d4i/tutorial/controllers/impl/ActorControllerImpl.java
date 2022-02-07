@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.everis.d4i.tutorial.controllers.ActorController;
 import com.everis.d4i.tutorial.exceptions.NetflixException;
+import com.everis.d4i.tutorial.json.ActorFilmRest;
 import com.everis.d4i.tutorial.json.ActorRest;
 import com.everis.d4i.tutorial.json.ActorRestS;
 import com.everis.d4i.tutorial.responses.NetflixResponse;
@@ -33,6 +35,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
+@PreAuthorize("authenticated")
 @RestController
 @RequestMapping(RestConstants.APPLICATION_NAME + RestConstants.API_VERSION_1 + RestConstants.RESOURCE_ACTOR)
 public class ActorControllerImpl implements ActorController{
@@ -48,6 +51,7 @@ public class ActorControllerImpl implements ActorController{
 	})
 
 	@Override
+	@PreAuthorize("hasRole('USER')")
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public NetflixResponse<List<ActorRestS>> getActors() throws NetflixException {
@@ -63,9 +67,10 @@ public class ActorControllerImpl implements ActorController{
 	})
 	
 	@Override
+	@PreAuthorize("hasRole('USER')")
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = RestConstants.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-	public NetflixResponse<ActorRest> getActorById(@PathVariable Long id) throws NetflixException {
+	public NetflixResponse<ActorFilmRest> getActorById(@PathVariable Long id) throws NetflixException {
 		return new NetflixResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK), CommonConstants.OK,
 				actorService.getActorById(id));
 	}
@@ -79,6 +84,7 @@ public class ActorControllerImpl implements ActorController{
 	})
 	
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = RestConstants.RESOURCE_CREATE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public NetflixResponse<ActorRest> createActor(
@@ -97,6 +103,7 @@ public class ActorControllerImpl implements ActorController{
 	})
 
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.OK)
 	@PatchMapping(value = RestConstants.RESOURCE_ID + RestConstants.RESOURCE_UPDATE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public NetflixResponse<ActorRest> updateActor(
@@ -115,6 +122,7 @@ public class ActorControllerImpl implements ActorController{
 	})
 	
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = RestConstants.RESOURCE_ID + RestConstants.RESOURCE_DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public NetflixResponse<ActorRest> deleteActor(

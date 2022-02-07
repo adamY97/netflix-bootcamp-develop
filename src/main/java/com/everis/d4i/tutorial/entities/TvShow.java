@@ -59,6 +59,6 @@ public class TvShow implements Serializable {
 	private List<Season> seasons;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tvShow")
-	private List<Award> awards;	
-
+	private List<Award> awards;
+	
 }

@@ -40,5 +40,4 @@ public class Season implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "season")
 	private List<Chapter> chapters;
-
 }

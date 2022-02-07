@@ -22,6 +22,8 @@ public class RestConstants {
 	public static final String PARAMETER_CATEGORY = "categories";
 	public static final String PARAMETER_TV_SHOW = "tvShows";
 	public static final String PARAMETER_ACTOR = "actors";
+	public static final String PARAMETER_USER = "users";
+	public static final String PARAMETER_ROLE_USER = "USER";
 
 	private RestConstants() {
 		throw new IllegalStateException("Utility Class");

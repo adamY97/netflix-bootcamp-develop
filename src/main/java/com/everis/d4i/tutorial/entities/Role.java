@@ -14,23 +14,15 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "CATEGORIES")
-@Data @AllArgsConstructor
-public class Category implements Serializable {
+@Table(name = "ROLES")
+@Data @NoArgsConstructor @AllArgsConstructor
+public class Role implements Serializable{
 
-	private static final long serialVersionUID = 180802329613616000L;
 	
-	public Category() {
-		
-	}
-	
-	public Category(Long id, String name) {
-		
-		this.id = id;
-		this.name = name;
-	}
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +31,7 @@ public class Category implements Serializable {
 	@Column(name = "NAME", unique = true)
 	private String name;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
-	private List<TvShow> tvShows;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
+	private List<Users> users;
 
 }

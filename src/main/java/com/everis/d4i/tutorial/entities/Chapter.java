@@ -2,6 +2,7 @@ package com.everis.d4i.tutorial.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,5 +43,25 @@ public class Chapter implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SEASON_ID", nullable = false)
 	private Season season;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Chapter other = (Chapter) obj;
+		return duration == other.duration && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& number == other.number && Objects.equals(season, other.season);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(duration, id, name, number, season);
+	}
+	
+	
 
 }

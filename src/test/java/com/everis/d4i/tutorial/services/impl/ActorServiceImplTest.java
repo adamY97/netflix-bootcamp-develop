@@ -10,7 +10,7 @@ import java.time.Year;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,12 @@ import com.everis.d4i.tutorial.entities.Season;
 import com.everis.d4i.tutorial.entities.TvShow;
 import com.everis.d4i.tutorial.exceptions.InternalServerErrorException;
 import com.everis.d4i.tutorial.exceptions.NetflixException;
+import com.everis.d4i.tutorial.exceptions.NotFoundException;
+import com.everis.d4i.tutorial.json.ActorFilmRest;
 import com.everis.d4i.tutorial.json.ActorRest;
 import com.everis.d4i.tutorial.json.ActorRestS;
+import com.everis.d4i.tutorial.json.TvShowFilmRest;
+import com.everis.d4i.tutorial.json.TvShowRest;
 import com.everis.d4i.tutorial.repositories.ActorRepository;
 import com.everis.d4i.tutorial.repositories.SeasonRepository;
 import com.everis.d4i.tutorial.repositories.TvShowRepository;
@@ -48,10 +52,14 @@ class ActorServiceImplTest {
 	private ModelMapper modelMapper = new ModelMapper();
 	
 	private Actor actor;
+	private Optional<Actor> actorOptional;
+	private ActorFilmRest actorFilmRest;
 	private ActorRest actorRest;
 	private Chapter chapter;
 	private Season season;
 	private TvShow tvShow;
+	private TvShowRest tvShowRest;
+	private TvShowFilmRest tvShowFilmRest;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -86,8 +94,23 @@ class ActorServiceImplTest {
 		actor.setSurname("Yacobi");
 		actor.setDate_birth(new Date());
 		actor.setChapters(Arrays.asList(chapter));
-	
 		
+		actorOptional = Optional.of(actor);
+		
+		tvShowFilmRest = new TvShowFilmRest();
+		tvShowFilmRest.setId((long) 2);
+		tvShowFilmRest.setName("Friends");
+		tvShowFilmRest.setLongDescription("Descripcion larga");
+		tvShowFilmRest.setShortDescription("Descripcion corta");
+	
+		actorFilmRest = new ActorFilmRest();
+		actorFilmRest.setId((long) 5);
+		actorFilmRest.setName("Adam");
+		actorFilmRest.setSurname("Yacobi");
+		actorFilmRest.setDate_birth(new Date());
+		actorFilmRest.setTvShows(Arrays.asList(tvShowFilmRest));
+		
+		tvShowRest = modelMapper.map(tvShow, TvShowRest.class);
 		actorRest = modelMapper.map(actor, ActorRest.class);
 	}
 
@@ -106,19 +129,16 @@ class ActorServiceImplTest {
 	@Test
 	void getActorById() throws NetflixException {
 		
-		when(actorRepository.getOne(actor.getId())).thenReturn(actor);
-		when(seasonRepository.getOne(season.getId())).thenReturn(season);
-		when(tvShowRepository.getOne(tvShow.getId())).thenReturn(tvShow);
+		when(actorRepository.findActorById(actor.getId())).thenReturn(actorOptional);
 		
-		ActorRest actorRest2 = actorServiceImpl.getActorById(actorRest.getId());
+		ActorFilmRest actorFilmRest2 = actorServiceImpl.getActorById(actor.getId());
 		
-		assertNotNull(actorRest2);
-		assertThat(actorRest2.getId()).isEqualTo(actorRest.getId());
-		assertThat(actorRest2.getName()).isEqualTo(actorRest.getName());
-		assertThat(actorRest2.getSurname()).isEqualTo(actorRest.getSurname());
-		assertThat(actorRest2.getDate_birth()).isEqualTo(actorRest.getDate_birth());
-		assertThat(actorRest2.getSurname()).isEqualTo(actorRest.getSurname());
-		assertThat(actorRest2.getChapters().equals(actorRest.getChapters()));
+		assertNotNull(actorFilmRest2);
+		assertThat(actorFilmRest2.getId()).isEqualTo(actorFilmRest.getId());
+		assertThat(actorFilmRest2.getName()).isEqualTo(actorFilmRest.getName());
+		assertThat(actorFilmRest2.getSurname()).isEqualTo(actorFilmRest.getSurname());
+		assertThat(actorFilmRest2.getDate_birth()).isEqualTo(actorFilmRest.getDate_birth());
+		assertThat(actorFilmRest2.getSurname()).isEqualTo(actorFilmRest.getSurname());
 	}
 	
 	@Test
@@ -140,9 +160,11 @@ class ActorServiceImplTest {
 	@Test
 	void updateActor() throws NetflixException {
 		
+		this.getActorById();
+		
 		when(actorRepository.getOne(actor.getId())).thenReturn(actor);
 		when(actorRepository.save(actor)).thenReturn(actor);
-		
+			
 		ActorRest actorRest2 = actorServiceImpl.updateActor(actor.getId(), actorRest);
 		
 		assertNotNull(actorRest2);
@@ -163,18 +185,36 @@ class ActorServiceImplTest {
 		
 		doThrow(new IllegalArgumentException()).when(actorRepository).deleteById(actor.getId());
 
-		try {
-			
+		Exception exception = assertThrows(NotFoundException.class, () -> {
 			actorServiceImpl.deleteActor(actor.getId());
-			
-		} catch (InternalServerErrorException internalServerErrorException) {
-			
-			 msg = internalServerErrorException.getMessage();
-		}
+		});
 		
-		String expectedMessage = ExceptionConstants.INTERNAL_SERVER_ERROR;
-
-		assertEquals(expectedMessage, msg);
+		String expectedMessage = ExceptionConstants.MESSAGE_INEXISTENT_ACTOR;
+		String actualMessage = exception.getMessage();
+	
+	
+	
+		assertTrue(actualMessage.contains(expectedMessage));
 	}
+	
+//	@Test
+//	void deleteActorById() throws NetflixException {
+//	doThrow(new IllegalArgumentException()).when(actorRepository).deleteById();
+//
+//
+//
+//	Exception exception = assertThrows(NotFoundException.class, () -> {
+//	actorService.deleteActorById();
+//	});
+//
+//
+//
+//	String expectedMessage = ExceptionConstants.MESSAGE_INEXISTENT_ACTOR;
+//	String actualMessage = exception.getMessage();
+//
+//
+//
+//	assertTrue(actualMessage.contains(expectedMessage));
+//	}
 
 }

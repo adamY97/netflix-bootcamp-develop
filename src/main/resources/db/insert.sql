@@ -49,8 +49,19 @@ INSERT INTO AWARDS(ID, NAME, DESCRIPTION, DATE, TV_SHOW_ID) VALUES
 	(4, 'Mejor serie de Terror', 'Descripcion' , '2021/12/28',2);
 
 
-INSERT INTO USERS(ID, NAME, SURNAME, EMAIL, USERNAME, PASSWORD, TYPE) VALUES /* Administrador/es */
-	(1, 'Adam', 'Yacobi' , 'adam@email.com', 'admin', 'admin', 'ADMIN')
+INSERT INTO USERS(ID, NAME, SURNAME, USERNAME, PASSWORD) VALUES /* Administrador/es */
+	(1, 'Adam', 'Yacobi' , 'admin', 'admin');
 
-INSERT INTO USERS(ID, NAME, SURNAME, EMAIL, USERNAME, PASSWORD) VALUES  /*Usuario/s*/
-	(2, 'Usuario1', 'u' , 'usuario1@email.com', 'usuario1', 'usuario1')
+INSERT INTO USERS(ID, NAME, SURNAME, USERNAME, PASSWORD) VALUES  /*Usuario/s*/
+	(2, 'Usuario1', 'Avatar' , 'usuario1', 'usuario1');
+
+
+INSERT INTO ROLES(ID, NAME) VALUES
+	(1, 'ADMIN'),
+	(2, 'USER');
+
+INSERT INTO USER_ROLE(USER_ID, ROLE_ID) VALUES
+	(1, 1),
+	(1, 2),
+	(2, 2);
+
