@@ -24,14 +24,12 @@ import com.everis.d4i.tutorial.entities.Actor;
 import com.everis.d4i.tutorial.entities.Chapter;
 import com.everis.d4i.tutorial.entities.Season;
 import com.everis.d4i.tutorial.entities.TvShow;
-import com.everis.d4i.tutorial.exceptions.InternalServerErrorException;
 import com.everis.d4i.tutorial.exceptions.NetflixException;
 import com.everis.d4i.tutorial.exceptions.NotFoundException;
 import com.everis.d4i.tutorial.json.ActorFilmRest;
 import com.everis.d4i.tutorial.json.ActorRest;
 import com.everis.d4i.tutorial.json.ActorRestS;
 import com.everis.d4i.tutorial.json.TvShowFilmRest;
-import com.everis.d4i.tutorial.json.TvShowRest;
 import com.everis.d4i.tutorial.repositories.ActorRepository;
 import com.everis.d4i.tutorial.repositories.SeasonRepository;
 import com.everis.d4i.tutorial.repositories.TvShowRepository;
@@ -58,7 +56,7 @@ class ActorServiceImplTest {
 	private Chapter chapter;
 	private Season season;
 	private TvShow tvShow;
-	private TvShowRest tvShowRest;
+//	private TvShowRest tvShowRest;
 	private TvShowFilmRest tvShowFilmRest;
 
 	@BeforeEach
@@ -110,7 +108,7 @@ class ActorServiceImplTest {
 		actorFilmRest.setDate_birth(new Date());
 		actorFilmRest.setTvShows(Arrays.asList(tvShowFilmRest));
 		
-		tvShowRest = modelMapper.map(tvShow, TvShowRest.class);
+//		tvShowRest = modelMapper.map(tvShow, TvShowRest.class);
 		actorRest = modelMapper.map(actor, ActorRest.class);
 	}
 
@@ -179,7 +177,6 @@ class ActorServiceImplTest {
 	@Test
 	void deleteActor() throws NetflixException {
 		
-		String msg = "";
 		
 		this.getActorById();
 		
